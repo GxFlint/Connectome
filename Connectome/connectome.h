@@ -1,4 +1,6 @@
 #include "internal_types.h"
+#include "activation_functions.h"
+#include "mkl.h" // Intel® Math Kernel Library 
 
 typedef struct network_struct network_t;
 typedef struct layer_struct layer_t;

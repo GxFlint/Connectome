@@ -1,8 +1,6 @@
-﻿#include "internal_types.h"
-#include "activation_functions.h"
-#include "math.h"
+﻿#include "activation_functions.h"
 
-// f(x) = x
+// f(x) = x -> (-∞, ∞)
 void identity(tiny_int count, weight_t *x) {
 	return;
 }

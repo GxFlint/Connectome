@@ -1,11 +1,8 @@
-#include "internal_types.h"
 #include "connectome.h"
-#include "activation_functions.h"
-#include "mkl.h" // Intel® Math Kernel Library 
 
 struct layer_struct {
-	int_u input_count;
-	int_u neuron_count;
+	u_int input_count;
+	u_int neuron_count;
 
 	void(*activation_function)(tiny_int, weight_t*);
 	void(*derivative_function)(tiny_int, weight_t*);
@@ -26,7 +23,7 @@ network_t* alocate_network(tiny_int layer_count, layer_t* layers) {
 	network->layers = layers;
 	network->weight_collection = malloc(sizeof(weight_t));
 
-	int_u weight_count = 0;
+	u_int weight_count = 0;
 
 	layer_t* current_layer = layers;
 	layer_t* last_layer = &layers[layer_count - 1];
@@ -48,9 +45,9 @@ void dealocate_network(network_t* network) {
 	free(network);
 }
 
-void matrix_multiply(int_u input_count, weight_t* input, int_u neuron_count, weight_t* weight_matrix, weight_t* weighted_input) {
+void matrix_multiply(u_int input_count, weight_t* input, u_int neuron_count, weight_t* weight_matrix, weight_t* weighted_input) {
 	const float alpha = 1.0, beta = 0.0; // ?
-	const int_u n = 1;
+	const u_int n = 1;
 
 	realloc(input, sizeof(weight_t) * input_count + 1);
 	input[input_count] = 1.0; // Bias input
@@ -78,28 +75,28 @@ weight_t* solve(weight_t* input, network_t *network) {
 	return weighted_input;
 }
 
-float calc_error_signal(int_u i, weight_t* error_signal, layer_t* layer) {
+float calc_error_signal(u_int i, weight_t* error_signal, layer_t* layer) {
 	weight_t weight;
 	weight_t error;
 
 	layer->neuron_count;
 	layer->input_count;
 
-	for (int_u n = 0; n < layer->neuron_count; n++) {
+	for (u_int n = 0; n < layer->neuron_count; n++) {
 		weight = layer->weights[(layer->input_count * n) + i];
 		error = error_signal[n];
 
 	}	
 }
 
-float sum(layer_t* layer, weight_t* error_signal, int_u n) {
+float sum(layer_t* layer, weight_t* error_signal, u_int n) {
 	layer->weights[layer->neuron_count]
 	error_signal[n] 
 }
 
 void train(weight_t* input, weight_t* desired_output, weight_t coeficient, network_t* network) {
-	int_u neuron_count;
-	int_u input_count;
+	u_int neuron_count;
+	u_int input_count;
 
 	weight_t** error_signal;
 	weight_t* result;
@@ -117,7 +114,7 @@ void train(weight_t* input, weight_t* desired_output, weight_t coeficient, netwo
 		result = solve(input, network);
 
 		error_signal[layer_count] = malloc(sizeof(weight_t) * neuron_count);
-		for (int_u n = 0; n < neuron_count; n++) { // for each neuron in the last layer
+		for (u_int n = 0; n < neuron_count; n++) { // for each neuron in the last layer
 			error_signal[layer_count][n] = desired_output[n] - result[n];
 		}
 	};
@@ -129,7 +126,7 @@ void train(weight_t* input, weight_t* desired_output, weight_t coeficient, netwo
 	// defining the error signal of each neuron
 	for (tiny_int L = layer_count - 1; L >= 0; L--) { // for each layer
 		error_signal[L] = malloc(sizeof(weight_t) * layer[L].neuron_count);
-		for (int_u n = 0; n < neuron_count; n++) { // for each neuron
+		for (u_int n = 0; n < neuron_count; n++) { // for each neuron
 			error_signal[L][n] = sum(error_signal[L - 1], n, &layer[L]);
 		}
 	}
