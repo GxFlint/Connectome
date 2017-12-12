@@ -154,7 +154,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="activation_functions.c" />
-    <ClCompile Include="backpropagation.c" />
     <ClCompile Include="interface.cpp" />
     <ClCompile Include="connectome.c" />
     <ClCompile Include="interface_windows.cpp" />
